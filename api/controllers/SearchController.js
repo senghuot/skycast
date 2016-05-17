@@ -58,8 +58,43 @@ module.exports = {
 
       });
     });
+  },
 
+  getSearch: function(req, res) {
+    console.log('req: ' + req.url)
 
+    var GOOGLE_API_KEY = 'AIzaSyAbAEugRMkqQFC2PRTs1BvrMDNiUpbicrQ';
+    var FORECAST_API_KEY = 'ee17cd367d8f7b705ace75db1bb8efdf'
+
+    var Geocoder  = require('node-geocoder')('google', 'https', {apiKey: GOOGLE_API_KEY});
+
+    var Forecast    = require('forecast.io');
+    var forecast    = new Forecast({APIKey: FORECAST_API_KEY});
+
+    Geocoder.geocode(req.param('keyword'), function(err, geocodeRes) {
+
+      // unexpected error occurred
+      if (err) return res.negotiate(err);
+
+      // check if we can get some result back
+      if (res.length == 0) {
+        return res.notFound();
+      }
+
+      var longitude = geocodeRes[0].longitude;
+      var latitude = geocodeRes[0].latitude;
+
+      forecast.get(latitude, longitude, function(err, forecastRes, data) {
+        if (err) {
+          return res.negotiate(err);
+        }
+
+        return res.json({
+          keyword: req.param('keyword'),
+          data: data.daily.data
+        });
+      });
+    });
   }
 };
 

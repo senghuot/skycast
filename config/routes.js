@@ -56,5 +56,6 @@ module.exports.routes = {
 
   'GET /dashboard': {view: 'dashboard'},
 
-  'POST /search': 'SearchController.search'
+  'POST /search': 'SearchController.search',
+  'GET /search': 'SearchController.getSearch'
 };
