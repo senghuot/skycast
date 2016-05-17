@@ -50,6 +50,7 @@ module.exports = {
 
             return res.json({
               keyword: req.param('keyword'),
+              history: history,
               src: 'https://www.google.com/maps/embed/v1/place?key=' + GOOGLE_API_KEY + '&q=' + latitude + ", " + longitude,
               data: data.daily.data
             });
