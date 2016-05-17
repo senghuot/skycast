@@ -18,6 +18,9 @@ app.controller('dashboardController', ['$scope', '$http', 'toastr', function($sc
   $scope.search = function() {
     $http.post('/search', {keyword: $scope.keyword})
       .then(function onSuccess (res) {
+
+        $("#dashboard").empty();
+
         $scope.response = res.data;
 
         function dashboard(id, fData){
