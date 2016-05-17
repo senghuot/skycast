@@ -36,7 +36,7 @@ module.exports = {
           if (err) return res.negotiate(err);
 
           // check if we can get some result back
-          if (res.length == 0) {
+          if (geocodeRes.length == 0) {
             return res.notFound();
           }
 
